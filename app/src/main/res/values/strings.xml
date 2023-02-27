@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">FirebaseApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="prefs_file">com.rew.firebaseapp.PREFERENCE_FILE_KEY</string>
 </resources>

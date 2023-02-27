@@ -1,8 +1,11 @@
 package com.example.firebaseapp
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -15,6 +18,7 @@ import com.example.firebaseapp.Controller.ResetPasswordController
 import com.example.firebaseapp.View.ILoginView
 import com.example.firebaseapp.View.IResetpasswordView
 import com.example.firebaseapp.databinding.ActivityLoginBinding
+import com.example.firebaseapp.enumClass.ProviderType
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity(), ILoginView, IResetpasswordView {
@@ -31,6 +35,8 @@ class LoginActivity : AppCompatActivity(), ILoginView, IResetpasswordView {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //session checker
+        sessionChecker()
 
         //intancia del controller
         loginPresenter = LoginController(this)
@@ -86,14 +92,28 @@ class LoginActivity : AppCompatActivity(), ILoginView, IResetpasswordView {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        binding.loginLayout.visibility = View.VISIBLE
 
+    }
     //fin del onCreate
 
+    private fun sessionChecker(){
+        val prefs : SharedPreferences = getSharedPreferences(getString(R.string.prefs_file),Context.MODE_PRIVATE)
+        val email = prefs.getString("email", null)
+        val provider = prefs.getString("provider", null)
+
+        if (email != null && provider != null){
+            binding.loginLayout.visibility = View.INVISIBLE
+            showHome(email, ProviderType.valueOf(provider))
+        }
+
+    }
 
     override fun OnLoginSuccees(boolean: Boolean?) {
         if (boolean == true) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            showHome(binding.etxtEmail.text.toString(),ProviderType.BASIC)
         } else {
             Toast.makeText(this, "Ocurrio un error al iniciar sesion", Toast.LENGTH_SHORT).show()
         }
@@ -109,6 +129,16 @@ class LoginActivity : AppCompatActivity(), ILoginView, IResetpasswordView {
 
     override fun OnResetError(message: String?) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    fun showHome(email: String, provider: ProviderType){
+        val intent = Intent(this, MainActivity::class.java).apply {
+            putExtra("email",email)
+            putExtra("provider",provider.name)
+        }
+
+
+        startActivity(intent)
     }
 }
 
