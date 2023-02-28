@@ -19,12 +19,18 @@ import com.example.firebaseapp.View.ILoginView
 import com.example.firebaseapp.View.IResetpasswordView
 import com.example.firebaseapp.databinding.ActivityLoginBinding
 import com.example.firebaseapp.enumClass.ProviderType
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 
 class LoginActivity : AppCompatActivity(), ILoginView, IResetpasswordView {
 
     var loginPresenter: ILoginController? = null
     var resetPresenter: IResetPasswordController? = null
+
+    private val GOOGLE_SING_IN = 100
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var firebaseAuth: FirebaseAuth
@@ -90,6 +96,53 @@ class LoginActivity : AppCompatActivity(), ILoginView, IResetpasswordView {
 
 
         }
+
+        //google sing in button
+        binding.btnSingInGoogle.setOnClickListener {
+
+            val googleConf =
+                GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id2)).requestEmail()
+                    .build()
+
+            val googleClient = GoogleSignIn.getClient(this, googleConf)
+            googleClient.signOut()
+
+            startActivityForResult(googleClient.signInIntent, GOOGLE_SING_IN)
+
+        }
+
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == GOOGLE_SING_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            val account = task.getResult(ApiException::class.java)
+
+            try {
+                if (account != null) {
+                    val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                    FirebaseAuth.getInstance().signInWithCredential(credential)
+                        .addOnCompleteListener { firebaseTask ->
+                            if (firebaseTask.isSuccessful) {
+                                showHome(account.email!!, ProviderType.GOOGLE)
+                            } else {
+                                Toast.makeText(
+                                    this,
+                                    firebaseTask.exception.toString(),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                }
+            } catch (e: ApiException) {
+                Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+        }
     }
 
     override fun onStart() {
@@ -99,12 +152,13 @@ class LoginActivity : AppCompatActivity(), ILoginView, IResetpasswordView {
     }
     //fin del onCreate
 
-    private fun sessionChecker(){
-        val prefs : SharedPreferences = getSharedPreferences(getString(R.string.prefs_file),Context.MODE_PRIVATE)
+    private fun sessionChecker() {
+        val prefs: SharedPreferences =
+            getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
         val email = prefs.getString("email", null)
         val provider = prefs.getString("provider", null)
 
-        if (email != null && provider != null){
+        if (email != null && provider != null) {
             binding.loginLayout.visibility = View.INVISIBLE
             showHome(email, ProviderType.valueOf(provider))
         }
@@ -113,7 +167,7 @@ class LoginActivity : AppCompatActivity(), ILoginView, IResetpasswordView {
 
     override fun OnLoginSuccees(boolean: Boolean?) {
         if (boolean == true) {
-            showHome(binding.etxtEmail.text.toString(),ProviderType.BASIC)
+            showHome(binding.etxtEmail.text.toString(), ProviderType.BASIC)
         } else {
             Toast.makeText(this, "Ocurrio un error al iniciar sesion", Toast.LENGTH_SHORT).show()
         }
@@ -131,10 +185,10 @@ class LoginActivity : AppCompatActivity(), ILoginView, IResetpasswordView {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    fun showHome(email: String, provider: ProviderType){
+    fun showHome(email: String, provider: ProviderType) {
         val intent = Intent(this, MainActivity::class.java).apply {
-            putExtra("email",email)
-            putExtra("provider",provider.name)
+            putExtra("email", email)
+            putExtra("provider", provider.name)
         }
 
 
