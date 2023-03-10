@@ -41,11 +41,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:text="Cerrar sesion"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.50"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtUser" />
+
+        <TextView
+            android:id="@+id/txtPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="@+id/txtProvider"
+            app:layout_constraintStart_toStartOf="@+id/txtProvider"
             app:layout_constraintTop_toBottomOf="@+id/txtProvider" />
+
+        <TextView
+            android:id="@+id/txtUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="@+id/txtPhone"
+            app:layout_constraintStart_toStartOf="@+id/txtPhone"
+            app:layout_constraintTop_toBottomOf="@+id/txtPhone" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

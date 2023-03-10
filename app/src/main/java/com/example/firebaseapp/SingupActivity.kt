@@ -8,11 +8,14 @@ import com.example.firebaseapp.Controller.ISingupController
 import com.example.firebaseapp.Controller.SingupController
 import com.example.firebaseapp.View.ISingupView
 import com.example.firebaseapp.databinding.ActivitySingupBinding
+import com.example.firebaseapp.enumClass.ProviderType
+import com.google.firebase.firestore.FirebaseFirestore
 
 class SingupActivity : AppCompatActivity(), ISingupView {
 
     private lateinit var binding: ActivitySingupBinding
 
+    var db = FirebaseFirestore.getInstance()
     var singupPresenter: ISingupController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +25,7 @@ class SingupActivity : AppCompatActivity(), ISingupView {
 
         //instancia del controller
         singupPresenter = SingupController(this)
+        //instancia de db
 
 
         binding.btnSingUp.setOnClickListener {
@@ -46,10 +50,33 @@ class SingupActivity : AppCompatActivity(), ISingupView {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             Toast.makeText(this, "Inicie sesion", Toast.LENGTH_SHORT).show()
+            OnDBSaveData(
+                binding.etxtUsuario.text.toString(),
+                binding.etxtEmail.text.toString(),
+                binding.etxtPhone.text.toString(),
+               provider = ProviderType.BASIC
+            )
         }
     }
 
     override fun OnSingupError(message: String?) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun OnDBSaveData(
+        user: String,
+        email: String,
+        phoneNumber: String,
+        provider: ProviderType
+    ) {
+        db.collection("user").document(email).set(
+            hashMapOf(
+                "provider" to provider,
+                "email" to email,
+                "user" to user,
+                "phone number" to phoneNumber,
+
+            )
+        )
     }
 }

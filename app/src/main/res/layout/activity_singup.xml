@@ -12,15 +12,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="16dp"
         android:text="Registrarse"
 
+        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@color/black"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etxtEmail"
@@ -29,17 +29,18 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="16dp"
+        android:autofillHints="emailAddress"
         android:background="@drawable/edittext_rounded_background"
         android:hint="Correo"
-        android:textColorHint="@color/black"
-        android:autofillHints="emailAddress"
-        android:padding="16dp"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
         android:inputType="textEmailAddress"
-        android:textColor="@color/black"/>
+        android:padding="16dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/textView8"
+        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
     <EditText
         android:id="@+id/etxtPassword"
         android:layout_width="match_parent"
@@ -47,16 +48,16 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="16dp"
+        android:autofillHints="password"
         android:background="@drawable/edittext_rounded_background"
         android:hint="Contraseña"
-        android:textColorHint="@color/black"
-        android:autofillHints="password"
-        android:padding="16dp"
         android:inputType="textPassword"
-        android:visibility="visible"
+        android:padding="16dp"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColorHint="@color/black"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/etxtEmail"
+        app:layout_constraintStart_toStartOf="@+id/etxtEmail"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <EditText
@@ -66,17 +67,55 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:autofillHints="password"
         android:background="@drawable/edittext_rounded_background"
         android:hint="Repetir contraseña"
-        android:autofillHints="password"
-        android:textColorHint="@color/black"
         android:inputType="textPassword"
         android:padding="16dp"
-        android:visibility="visible"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColorHint="@color/black"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/etxtPassword"
+        app:layout_constraintStart_toStartOf="@+id/etxtPassword"
         app:layout_constraintTop_toBottomOf="@+id/etxtPassword" />
+
+    <EditText
+        android:id="@+id/etxtPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:autofillHints="password"
+        android:background="@drawable/edittext_rounded_background"
+        android:hint="Telefono"
+        android:inputType="phone"
+        android:padding="16dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/etxtPasswordConfirm"
+        app:layout_constraintStart_toStartOf="@+id/etxtPasswordConfirm"
+        app:layout_constraintTop_toBottomOf="@+id/etxtPasswordConfirm" />
+
+    <EditText
+        android:id="@+id/etxtUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:autofillHints="password"
+        android:background="@drawable/edittext_rounded_background"
+        android:hint="Usuario"
+        android:inputType="textPersonName"
+        android:padding="16dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/etxtPhone"
+        app:layout_constraintStart_toStartOf="@+id/etxtPhone"
+        app:layout_constraintTop_toBottomOf="@+id/etxtPhone" />
 
     <Button
         android:id="@+id/btnSingUp"
@@ -85,12 +124,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Registrar"
         android:autofillHints="password"
+        android:text="Registrar"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etxtPasswordConfirm" />
+        app:layout_constraintTop_toBottomOf="@+id/etxtUsuario" />
 
     <TextView
         android:id="@+id/txtLogIn"

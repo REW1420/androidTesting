@@ -1,11 +1,13 @@
 package com.example.firebaseapp
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.firebaseapp.Controller.LoginController
+import com.example.firebaseapp.Interfaces.APIService
+import com.example.firebaseapp.Model.DogsResponse
 import com.example.firebaseapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -50,6 +52,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
         binding.bottomNavigationView.setOnItemSelectedListener {
 
 
@@ -60,6 +63,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.home -> replaceFragment(Home())
                 R.id.profile -> replaceFragment(Profile())
                 R.id.search -> replaceFragment(Search())
+                R.id.settings -> replaceFragment(SettingsFragment())
 
                 else -> {
 
