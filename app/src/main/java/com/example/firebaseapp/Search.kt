@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.firebaseapp.Adapter.DogAdapter
+import com.example.firebaseapp.AdapterHolder.DogAdapter
 import com.example.firebaseapp.Interfaces.APIService
 import com.example.firebaseapp.databinding.FragmentSearchBinding
 import kotlinx.coroutines.CoroutineScope

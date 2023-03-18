@@ -1,4 +1,4 @@
-package com.example.firebaseapp.Adapter
+package com.example.firebaseapp.AdapterHolder
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
